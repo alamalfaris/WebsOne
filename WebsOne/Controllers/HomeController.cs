@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WebsOne.Helpers;
 using WebsOne.Models;
 
 namespace WebsOne.Controllers
 {
+    [CustomAuthorizationAttribute]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
