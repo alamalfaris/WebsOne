@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Request;
+using Shared.Responses;
 using WebsOne.Api.Contracts;
+using WebsOne.Api.Helpers;
 
 namespace WebsOne.Api.Controllers
 {
@@ -19,8 +21,9 @@ namespace WebsOne.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest request)
         {
-            
-            return Ok();
+            var loginResponse = await _repository.Auth.LoginLogic(request);
+            var response = ResponseHelpers<LoginResponse>.CreateResponseSuccess(loginResponse, "");
+            return Ok(response);
         }
     }
 }

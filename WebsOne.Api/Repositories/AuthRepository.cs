@@ -1,7 +1,7 @@
-﻿using BCrypt.Net;
-using Models.Entities;
+﻿using Models.Entities;
 using Shared.Constants;
 using Shared.Request;
+using Shared.Responses;
 using WebsOne.Api.Contracts;
 using WebsOne.Api.Databases;
 
@@ -9,9 +9,14 @@ namespace WebsOne.Api.Repositories
 {
     public class AuthRepository: RepositoryBase<User>, IAuthRepository
     {
-        public AuthRepository(SqlServerContext context) : base(context) { }
-        
-        public async Task LoginLogic(LoginRequest request)
+        private readonly IJwtHelper _jwtHelper;
+
+        public AuthRepository(SqlServerContext context, IJwtHelper jwtHelper) : base(context)
+        {
+            _jwtHelper = jwtHelper;
+        }
+
+        public async Task<LoginResponse> LoginLogic(LoginRequest request)
         {
             //1. cek ke table user
             var userDb = await FindOneByCondition(x => x.UserName == request.UserName);
@@ -28,6 +33,10 @@ namespace WebsOne.Api.Repositories
             }
 
             //2. generate token
+            var token = _jwtHelper.GenerateToken(userDb);
+
+            var loginResponse = new LoginResponse() { Token = token, UserName = request.UserName };
+            return loginResponse;
         }
     }
 }

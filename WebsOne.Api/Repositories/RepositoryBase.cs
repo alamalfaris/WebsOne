@@ -32,7 +32,7 @@ namespace WebsOne.Api.Repositories
 
         public async Task<T> FindOneByCondition(Expression<Func<T, bool>> expression)
         {
-            return await _context.Set<T>().FirstAsync(expression);
+            return await _context.Set<T>().FirstOrDefaultAsync(expression);
         }
 
         public async Task Update(T entity)

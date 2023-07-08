@@ -9,6 +9,8 @@ namespace WebsOne.Api.Helpers
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IJwtHelper, JwtHelper>();
         }
     }
 }
