@@ -10,6 +10,6 @@ namespace Shared.Constants
     {
         public const string CreateSuccess = "Create success";
         public const string NotFound = "Not found";
-        public const string WrongPassword = "Wrong password!";
+        public const string Wrong = "Wrong";
     }
 }
